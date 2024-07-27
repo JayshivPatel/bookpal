@@ -10,7 +10,7 @@ const LandingScreen = () => <Landing/>
 const SettingsScreen = () => <Settings/>
 const WordsScreen = () => <Words/>
 
-import { createTable } from './src/database';
+import { createDatabase } from './src/database';
 
 export default function App() {
   // Navigator
@@ -29,7 +29,7 @@ export default function App() {
   });
 
   // Database
-  createTable();
+  createDatabase();
 
 
   return (
@@ -42,13 +42,3 @@ export default function App() {
     </PaperProvider>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
-
