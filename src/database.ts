@@ -54,14 +54,14 @@ export const createDatabase = () => {
             );
         CREATE TABLE IF NOT EXISTS words
             (
-                id INTEGER PRIMARY KEY AUTOINCREMENT,
                 word VARCHAR(20) NOT NULL,
-                bookID INTEGER,
+                bookID INTEGER NOT NULL,
                 timeAdded DATETIME,
                 definitions TEXT(5000),
-                FOREIGN KEY (bookID) REFERENCES books(id)
+                FOREIGN KEY (bookID) REFERENCES books(id) ON DELETE CASCADE,
+                PRIMARY KEY (word, bookID)
                 
-            )`
+            );`
     );
 }
 
@@ -82,7 +82,7 @@ export const addWordToTable = (bookID: number, word: string, definitions: string
                 "${bookID}", 
                 DATETIME(), 
                 "${definitions}"
-            )`
+            );`
     );
 }
 
@@ -101,7 +101,7 @@ export const addBookToTable = (title: string, author: string) => {
                 "${title}", 
                 "${author}",
                 DATETIME()
-            )`
+            );`
     );
 }
 
