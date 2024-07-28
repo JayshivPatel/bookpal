@@ -32,7 +32,7 @@ export default function App() {
   useDrizzleStudio(db);
   createDatabase();
   //addBookToTable("MyBook", "Me");
-  addWordToTable("my word", 1, "fake definition");
+  addWordToTable(1, "my word", "new");
 
   return (
     <PaperProvider>

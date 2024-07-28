@@ -79,9 +79,9 @@ export const addWordToTable = (bookID: number, word: string, definitions: string
         VALUES 
             (
                 "${word}", 
-                ${bookID}, 
-                DATE(), 
-                ${definitions}
+                "${bookID}", 
+                DATETIME(), 
+                "${definitions}"
             )`
     );
 }
@@ -100,7 +100,7 @@ export const addBookToTable = (title: string, author: string) => {
             (
                 "${title}", 
                 "${author}",
-                DATE()
+                DATETIME()
             )`
     );
 }
