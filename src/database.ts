@@ -23,7 +23,6 @@ async function databaseGetAllAsync(query: string, params: string[]): Promise<unk
 async function databaseGetFirstAsync(query: string, params: string[]): Promise<unknown> {
     try {
         return await db.getFirstAsync(query, params);
-
     } catch (error) {
         throw new Error("Statement failed to execute!");
     }
@@ -103,16 +102,4 @@ export const addBookToTable = (title: string, author: string) => {
                 DATETIME()
             );`
     );
-}
-
-
-// Get the words given the book title.
-export const getBooksWords = async (title: string): Promise<WordRecord[]>  => {
-    try {
-        const bookID: string = (await getBookID(title)).toString();
-        return await databaseGetAllAsync(`SELECT * FROM words WHERE bookID = ?`, [bookID]) as WordRecord[];
-
-    } catch (error) {
-        throw new Error ("Could not retrieve words for book!");
-    }
 }

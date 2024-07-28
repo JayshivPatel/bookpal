@@ -1,15 +1,15 @@
 import * as React from 'react';
 import { BottomNavigation, PaperProvider } from 'react-native-paper';
 
-import Landing from "./src/pages/Landing";
-import Settings from "./src/pages/Settings";
-import Words from "./src/pages/Words";
+import Landing from './src/pages/Landing';
+import Settings from './src/pages/Settings';
+import Words from './src/pages/Words';
 
 const LandingScreen = () => <Landing/>
 const SettingsScreen = () => <Settings/>
 const WordsScreen = () => <Words/>
 
-import { db, createDatabase, addBookToTable, addWordToTable, getBooksWords } from './src/database';
+import { db, createDatabase } from './src/database';
 import { useDrizzleStudio } from 'expo-drizzle-studio-plugin';
 
 export default function App() {
