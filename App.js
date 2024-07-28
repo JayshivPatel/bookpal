@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { StyleSheet } from 'react-native';
 import { BottomNavigation, PaperProvider } from 'react-native-paper';
 
 import Landing from "./src/pages/Landing";
@@ -10,7 +9,8 @@ const LandingScreen = () => <Landing/>
 const SettingsScreen = () => <Settings/>
 const WordsScreen = () => <Words/>
 
-import { createDatabase } from './src/database';
+import { db, createDatabase } from './src/database';
+import { useDrizzleStudio } from 'expo-drizzle-studio-plugin';
 
 export default function App() {
   // Navigator
@@ -29,6 +29,7 @@ export default function App() {
   });
 
   // Database
+  useDrizzleStudio(db);
   createDatabase();
 
 
