@@ -7,7 +7,7 @@ async function databaseExecAsync(query: string) {
         await db.execAsync(query);
 
     } catch (error) {
-        throw new Error("Statement failed to execute!");
+        throw new Error(error);
     }
 }
 
@@ -78,10 +78,11 @@ export const addWordToTable = (bookID: number, word: string, definitions: string
             ) 
         VALUES 
             (
-                ${word}, 
+                "${word}", 
                 ${bookID}, 
                 DATE(), 
-                ${definitions}`
+                ${definitions}
+            )`
     );
 }
 
@@ -97,9 +98,10 @@ export const addBookToTable = (title: string, author: string) => {
             ) 
         VALUES 
             (
-                ${title}, 
-                ${author},
-                DATE()`
+                "${title}", 
+                "${author}",
+                DATE()
+            )`
     );
 }
 

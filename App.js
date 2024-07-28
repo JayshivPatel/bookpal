@@ -9,7 +9,7 @@ const LandingScreen = () => <Landing/>
 const SettingsScreen = () => <Settings/>
 const WordsScreen = () => <Words/>
 
-import { db, createDatabase } from './src/database';
+import { db, createDatabase, addBookToTable, addWordToTable } from './src/database';
 import { useDrizzleStudio } from 'expo-drizzle-studio-plugin';
 
 export default function App() {
@@ -31,7 +31,8 @@ export default function App() {
   // Database
   useDrizzleStudio(db);
   createDatabase();
-
+  //addBookToTable("MyBook", "Me");
+  addWordToTable("my word", 1, "fake definition");
 
   return (
     <PaperProvider>
