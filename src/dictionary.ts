@@ -41,14 +41,18 @@ export type ErrorResponse = {
     resolution: string
 }
 
-async function fetchWordDefinitions(word: string): Promise<DictionaryResponse[] | ErrorResponse> {
+export const fetchWordDefinitions = async (word: string, retryCount = 0): Promise<DictionaryResponse[] | ErrorResponse> => {
     const freeDictionaryAPI = `https://api.dictionaryapi.dev/api/v2/entries/en/${word}`;
+    const maxRetries = 5;
 
     try {
         const response: Response = await fetch(freeDictionaryAPI);
-        const data: DictionaryResponse | ErrorResponse = await response.json();
+        const data: DictionaryResponse[] | ErrorResponse = await response.json();
         return data;
     } catch (error) {
+        if (retryCount < maxRetries) {
+            return fetchWordDefinitions(word, retryCount + 1);
+        }
         throw new Error(error);
     }
 }
@@ -57,16 +61,27 @@ function isErrorResponse(response: DictionaryResponse[] | ErrorResponse): respon
     return (response as ErrorResponse).message !== undefined;
 }
 
-// Return the definition of the input word.
-export const getDefinition = async (word: string): Promise<DictionaryResponse[]> => {
-    try {
-        const response: DictionaryResponse[] | ErrorResponse = await fetchWordDefinitions(word);
-        if (isErrorResponse(response)) {
-            throw new Error("Call to API failed!")
-        } else {
-            return response as DictionaryResponse[];
+// Extract text from a response from the API
+export const extractText = (response: DictionaryResponse[] | ErrorResponse): string => {
+    if (isErrorResponse(response)) {
+        return `${response.title}\n${response.resolution}`;
+    } else {
+        var stringBuilder: string = "";
+        for (const dictResponse of response) {
+            for (const meaning of dictResponse.meanings) {
+                stringBuilder += `Part of speech: ${meaning.partOfSpeech} \n`;
+                var count = 1;
+                for (const definition of meaning.definitions) {
+                    stringBuilder += `Definition (${count}): ${definition.definition}\n`;
+                    if (definition.example !== undefined) {
+                        stringBuilder += `Example: ${definition.example}\n`;
+                    }
+                    count += 1;
+                }
+                stringBuilder += "\n";
+            }
+            stringBuilder += "\n"
         }
-    } catch (error) {
-        throw new Error(error);
+    return stringBuilder;
     }
 }

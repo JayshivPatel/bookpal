@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { TextInput, Card, Appbar, Text} from 'react-native-paper';
-import { DictionaryResponse, Meaning, Definition, getDefinition } from '../dictionary'
+import { DictionaryResponse, ErrorResponse, fetchWordDefinitions, extractText } from '../dictionary';
+import { ScrollView, View } from 'react-native';
 
 const Landing = () => {
     const [inputText, setInputText] = React.useState("");
@@ -18,14 +19,12 @@ const Landing = () => {
         }
 
         // Query API.
-        const response: DictionaryResponse[] = await getDefinition(word);
-        const firstMeaning: Meaning = response[0].meanings[0];
-        const definition: Definition = firstMeaning.definitions[0];
-        setOutputText(definition.definition);
+        const response: DictionaryResponse[] | ErrorResponse = await fetchWordDefinitions(word);
+        setOutputText(extractText(response));
     }
 
     return (
-            <Card>
+            <View>
 
                 <Appbar.Header>
                     <Appbar.Content title="BookPal" />
@@ -43,15 +42,17 @@ const Landing = () => {
                     </Card.Content>
                 </Card>
 
-                <Card>
-                    <Card.Title title="Results:" />
+                <ScrollView>
+                    <Card>
+                        <Card.Title title="Results:" />
 
-                    <Card.Content>
-                        <Text>{outputText}</Text>
-                    </Card.Content>
-                </Card>
+                        <Card.Content>
+                            <Text>{outputText}</Text>
+                        </Card.Content>
+                    </Card>
+                </ScrollView>
 
-            </Card>
+            </View>
     );
 };
 
