@@ -1,7 +1,7 @@
 import * as React from 'react';
-import { TextInput, Card, Appbar, Text } from 'react-native-paper';
+import { TextInput, Text } from 'react-native-paper';
 import { DictionaryResponse, ErrorResponse, fetchWordDefinitions } from '../dictionary';
-import { extractItems } from './util/extractItems';
+import { displayDictionaryResponse } from './components/displayDictionaryResponse';
 import { ScrollView, View } from 'react-native';
 
 
@@ -22,33 +22,19 @@ const Landing = () => {
 
         // Query API.
         const response: DictionaryResponse[] | ErrorResponse = await fetchWordDefinitions(word);
-        setOutputItems(extractItems(response));
+        setOutputItems(displayDictionaryResponse(response));
     }
 
     return (
-        <View>
-            <Appbar.Header>
-                <Appbar.Content title="BookPal" />
-            </Appbar.Header>
-
-            <Card>
-                <Card.Content>
-                    <TextInput
-                        label="Type a word"
-                        value={inputText}
-                        onChangeText={inputHandler}
-                        mode={"outlined"}
-                    />
-                </Card.Content>
-            </Card>
-
+        <View style={{flex: 1}}>
+                <TextInput
+                    label="Type a word"
+                    value={inputText}
+                    onChangeText={inputHandler}
+                    mode={"outlined"}
+                />
             <ScrollView>
-                <Card>
-                    <Card.Title title="Results:" />
-                    <Card.Content>
-                        {outputItems}
-                    </Card.Content>
-                </Card>
+                {outputItems}
             </ScrollView>
         </View>
     );

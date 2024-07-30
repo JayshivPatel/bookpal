@@ -1,10 +1,10 @@
 import * as React from 'react';
 import { List, Divider} from 'react-native-paper';
 import { DictionaryResponse, ErrorResponse, isErrorResponse } from '../../dictionary';
-import { DefinitionCard } from '../components/DefinitionCard';
-import { SynonymChip } from '../components/SynonymChip';
+import { DefinitionCard } from './DefinitionCard';
+import { SynonymChip } from './SynonymChip';
 
-export function extractItems(response: DictionaryResponse[] | ErrorResponse): React.ReactNode {
+export function displayDictionaryResponse(response: DictionaryResponse[] | ErrorResponse): React.ReactNode {
   if (isErrorResponse(response)) {
     return <List.Item title={`${response.title}`} description={`${response.resolution}`} />;
   } else {

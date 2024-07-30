@@ -1,5 +1,6 @@
 import * as React from 'react';
-import { BottomNavigation, PaperProvider } from 'react-native-paper';
+import { BottomNavigation, PaperProvider, Appbar } from 'react-native-paper';
+import { View } from 'react-native';
 
 import Landing from './src/pages/Landing';
 import Settings from './src/pages/Settings';
@@ -34,11 +35,19 @@ export default function App() {
 
   return (
     <PaperProvider>
-      <BottomNavigation
-        navigationState={{ index, routes }}
-        onIndexChange={setIndex}
-        renderScene={renderScene}
-      />
+        <View>
+          <Appbar.Header>
+            <Appbar.Content title="BookPal" />
+          </Appbar.Header>
+        </View>
+
+        <BottomNavigation
+          navigationState={{ index, routes }}
+          onIndexChange={setIndex}
+          renderScene={renderScene}
+          style={{flex: 1}}
+        />
+
     </PaperProvider>
   );
 }
