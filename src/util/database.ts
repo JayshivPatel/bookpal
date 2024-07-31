@@ -5,7 +5,6 @@ export const db: SQLite.SQLiteDatabase = SQLite.openDatabaseSync("words.db");
 async function databaseExecAsync(query: string) {
     try {
         await db.execAsync(query);
-
     } catch (error) {
         throw new Error(error);
     }
@@ -14,7 +13,6 @@ async function databaseExecAsync(query: string) {
 async function databaseGetAllAsync(query: string, params: string[]): Promise<unknown[]> {
     try {
         return await db.getAllAsync(query, params);
-
     } catch (error) {
         throw new Error("Statement failed to execute!");
     }
