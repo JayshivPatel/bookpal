@@ -1,4 +1,6 @@
 import * as SQLite from 'expo-sqlite';
+import { Definition } from './dictionary';
+import { Word } from './Word';
 
 export const db: SQLite.SQLiteDatabase = SQLite.openDatabaseSync("words.db");
 
@@ -26,78 +28,44 @@ async function databaseGetFirstAsync(query: string, params: string[]): Promise<u
     }
 }
 
-// Get the bookID of a book already in the table.
-async function getBookID (title: string): Promise<number> {
-    try {
-        const id: number = 
-            await databaseGetFirstAsync(`SELECT id FROM books WHERE title = ?`, [title]) as number;
-        return id;
-    } catch (error) {
-        throw new Error("Could not get BookID!");
-    }
-}
-
 
 // Create database and tables
 export const createDatabase = () => {
     databaseExecAsync
     (
-        `CREATE TABLE IF NOT EXISTS books 
+        `CREATE TABLE IF NOT EXISTS words
             (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
-                title VARCHAR(50) NOT NULL,
-                author VARCHAR (50),
-                timeAdded DATETIME
-            );
-        CREATE TABLE IF NOT EXISTS words
-            (
                 word VARCHAR(20) NOT NULL,
-                bookID INTEGER NOT NULL,
-                timeAdded DATETIME,
-                definitions TEXT(5000),
-                FOREIGN KEY (bookID) REFERENCES books(id) ON DELETE CASCADE,
-                PRIMARY KEY (word, bookID)
-                
+                book VARCHAR(100),
+                definition TEXT(500),
+                timeAdded DATETIME
             );`
     );
 }
 
-// Add a new word to the table - requires bookID from database.
-export const addWordToTable = (bookID: number, word: string, definitions: string) => {
+// Add a new word to the database.
+export const addWordToDatabase = (word: string, book: string, definition: Definition) => {
     databaseExecAsync
     (
         `INSERT INTO words 
             (
                 word,
-                bookID,
-                timeAdded,
-                definitions
-            ) 
-        VALUES 
-            (
-                "${word}", 
-                "${bookID}", 
-                DATETIME(), 
-                "${definitions}"
-            );`
-    );
-}
-
-// Add a new book to the table.
-export const addBookToTable = (title: string, author: string) => {
-    databaseExecAsync
-    (
-        `INSERT INTO books 
-            (
-                title,
-                author,
+                book,
+                definition, 
                 timeAdded
             ) 
         VALUES 
             (
-                "${title}", 
-                "${author}",
+                "${word}", 
+                "${book}", 
+                "${JSON.stringify(definition)}",
                 DATETIME()
             );`
     );
+}
+
+// Get all words in the database.
+export const getAllWords = async (): Promise<Word[]> => {
+    return databaseGetAllAsync(`SELECT * FROM words;`, []) as Promise<Word[]>;
 }

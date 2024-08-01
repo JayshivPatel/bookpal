@@ -3,7 +3,7 @@ import { BottomNavigation, PaperProvider, Appbar } from 'react-native-paper';
 import { View } from 'react-native';
 import { useDrizzleStudio } from 'expo-drizzle-studio-plugin';
 
-import { db, createDatabase } from './src/util/database';
+import { db, createDatabase, addWordToDatabase } from './src/util/database';
 import Landing from './src/pages/Landing';
 import Book from './src/pages/Book';
 import Words from './src/pages/Words';
@@ -32,6 +32,7 @@ export default function App() {
   // Database
   useDrizzleStudio(db);
   createDatabase();
+  addWordToDatabase("myCoolWord", "myCoolBook", '{"definition":"myCoolDefinition", "example":"", "synonyms":null, "antonyms":null}')
 
   return (
     <PaperProvider>
