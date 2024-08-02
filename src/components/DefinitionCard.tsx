@@ -1,14 +1,28 @@
 import * as React from 'react';
-import { Button, Card,  IconButton,  Text } from 'react-native-paper';
+import { Card,  IconButton,  Text } from 'react-native-paper';
 import { SynonymChips } from './SynonymChips'
 import { View } from 'react-native';
 
-export const DefinitionCard = ({definition, example, synonyms, antonyms}) => {
+import { addWordToDatabase, removeWordFromDatabase } from '../api/database';
+import { Definition } from '../api/dictionary';
+
+export const DefinitionCard = ({word, book, definition, example, synonyms, antonyms}) => {
     const [isToggled, setIsToggled] = React.useState(false);
 
     const handleToggle = () => {
       setIsToggled(!isToggled);
-      // Save word to database here.
+      const databaseDefinition: Definition = {
+        definition: definition,
+        example: example,
+        synonyms: synonyms,
+        antonyms: antonyms
+      }
+      if (!isToggled) {
+        addWordToDatabase(word, book, databaseDefinition);
+      } else {
+        removeWordFromDatabase(word, databaseDefinition);
+      }
+
     }
 
   

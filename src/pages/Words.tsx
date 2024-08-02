@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { ScrollView, View } from 'react-native';
-import { Text } from 'react-native-paper';
 import { getAllWords } from '../api/database';
 import { Word } from '../util/Word'
 import { DefinitionCard } from '../components/DefinitionCard';
@@ -24,13 +23,16 @@ const Words = () => {
     return (
         <View style={{flex: 1}}>
             <ScrollView>
-            {wordList.map((word) => (
+            {wordList.map((wordRecord) => (
                 <View>
                     <DefinitionCard
-                        definition={word.definition.definition}
-                        example={word.definition.example}
-                        synonyms={word.definition.synonyms || []}
-                        antonyms={word.definition.antonyms || []}
+                        key={`disp-${wordRecord.id}`}
+                        word={wordRecord.word}
+                        book={"MyFixedBook"}
+                        definition={wordRecord.definition.definition}
+                        example={wordRecord.definition.example}
+                        synonyms={wordRecord.definition.synonyms || []}
+                        antonyms={wordRecord.definition.antonyms || []}
                     />
                 </View>
             ))}

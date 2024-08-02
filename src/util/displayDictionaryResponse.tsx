@@ -24,6 +24,8 @@ export function displayDictionaryResponse(response: DictionaryResponse[] | Error
           items.push(
             <DefinitionCard
               key={`def-${itemId}`}
+              word={dictResponse.word}
+              book={"MyFixedBook"}
               definition={definition.definition}
               example={definition.example}
               synonyms={definition.synonyms || []}

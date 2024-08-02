@@ -1,6 +1,6 @@
 import * as SQLite from 'expo-sqlite';
 import { Definition } from './dictionary';
-import { Word } from './Word';
+import { Word } from '../util/Word';
 
 export const db: SQLite.SQLiteDatabase = SQLite.openDatabaseSync("words.db");
 
@@ -57,11 +57,20 @@ export const addWordToDatabase = (word: string, book: string, definition: Defini
             ) 
         VALUES 
             (
-                "${word}", 
-                "${book}", 
-                "${JSON.stringify(definition)}",
+                '${word}', 
+                '${book}', 
+                '${JSON.stringify(definition)}',
                 DATETIME()
             );`
+    );
+}
+
+// Remove a word from the database (by definition)
+export const removeWordFromDatabase = (word: string, definition: Definition) => {
+    databaseExecAsync
+    (
+        `DELETE FROM words
+            WHERE word='${word}' AND definition='${JSON.stringify(definition)}'`
     );
 }
 
