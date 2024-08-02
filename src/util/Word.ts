@@ -1,4 +1,4 @@
-import { Definition } from "./dictionary"
+import { Definition } from "../api/dictionary"
 
 export type Word = {
     id: number,

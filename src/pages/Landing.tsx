@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { TextInput, Text } from 'react-native-paper';
-import { DictionaryResponse, ErrorResponse, fetchWordDefinitions } from '../util/dictionary';
+import { DictionaryResponse, ErrorResponse, fetchWordDefinitions } from '../api/dictionary';
 import { displayDictionaryResponse } from '../util/displayDictionaryResponse';
 import { ScrollView, View } from 'react-native';
 

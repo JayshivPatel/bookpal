@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { ScrollView, View } from 'react-native';
 import { Text } from 'react-native-paper';
-import { getAllWords } from '../util/database';
+import { getAllWords } from '../api/database';
 import { Word } from '../util/Word'
 import { DefinitionCard } from '../components/DefinitionCard';
 

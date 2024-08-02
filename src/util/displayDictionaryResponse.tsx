@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { List, Divider, Text} from 'react-native-paper';
-import { DictionaryResponse, ErrorResponse, isErrorResponse } from './dictionary';
+import { DictionaryResponse, ErrorResponse, isErrorResponse } from '../api/dictionary';
 import { DefinitionCard } from '../components/DefinitionCard';
 import { SynonymChips } from '../components/SynonymChips';
 
