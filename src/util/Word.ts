@@ -4,6 +4,6 @@ export type Word = {
     id: number,
     word: string,
     book: string,
-    definition: Definition,
+    definition: string,
     timeAdded: Date,
 }
