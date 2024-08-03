@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { List, Divider, Text} from 'react-native-paper';
 import { DictionaryResponse, ErrorResponse, isErrorResponse } from '../api/dictionary';
-import { DefinitionCard } from '../components/DefinitionCard';
 import { SynonymChips } from '../components/SynonymChips';
+import { DictionaryDefinitionCard } from '../components/DictionaryDefinitionCard';
 
 export function displayDictionaryResponse(response: DictionaryResponse[] | ErrorResponse): React.ReactNode {
   if (isErrorResponse(response)) {
@@ -22,14 +22,14 @@ export function displayDictionaryResponse(response: DictionaryResponse[] | Error
 
         meaning.definitions.forEach((definition) => {
           items.push(
-            <DefinitionCard
-              key={`def-${itemId}`}
-              word={dictResponse.word}
-              book={"MyFixedBook"}
-              definition={definition.definition}
-              example={definition.example}
-              synonyms={definition.synonyms || []}
-              antonyms={definition.antonyms || []}
+              <DictionaryDefinitionCard
+                key={`def-${itemId}`}
+                word={dictResponse.word}
+                book={"MyFixedBook"}
+                definition={definition.definition}
+                example={definition.example}
+                synonyms={definition.synonyms || []}
+                antonyms={definition.antonyms || []}
             />
           );
           itemId++;

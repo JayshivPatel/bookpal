@@ -7,3 +7,7 @@ export type Word = {
     definition: string,
     timeAdded: Date,
 }
+
+export type Count = {
+    count: number
+}

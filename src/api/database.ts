@@ -1,6 +1,6 @@
 import * as SQLite from 'expo-sqlite';
 import { Definition } from './dictionary';
-import { Word } from '../util/Word';
+import { Count, Word } from '../util/Word';
 
 export const db: SQLite.SQLiteDatabase = SQLite.openDatabaseSync("words.db");
 
@@ -16,7 +16,7 @@ async function databaseGetAllAsync(query: string, params: string[]): Promise<unk
     try {
         return await db.getAllAsync(query, params);
     } catch (error) {
-        throw new Error("Statement failed to execute!");
+        throw new Error("Statement failed to execute:" + error);
     }
 }
 
@@ -24,7 +24,7 @@ async function databaseGetFirstAsync(query: string, params: string[]): Promise<u
     try {
         return await db.getFirstAsync(query, params);
     } catch (error) {
-        throw new Error("Statement failed to execute!");
+        throw new Error("Statement failed to execute!" + error);
     }
 }
 
@@ -65,13 +65,28 @@ export const addWordToDatabase = (word: string, book: string, definition: Defini
     );
 }
 
-// Remove a word from the database (by definition)
+// Remove a word from the database (by definition).
 export const removeWordFromDatabase = (word: string, definition: Definition) => {
     databaseExecAsync
     (
         `DELETE FROM words
             WHERE word='${word}' AND definition='${JSON.stringify(definition)}'`
     );
+}
+
+// Check if a word is in the database (by definition).
+export const checkWordInDatabase = async (word: string, definition: Definition): Promise<boolean> => {
+    const exists: Count = 
+        JSON.parse(
+            await databaseGetFirstAsync
+            (
+            `SELECT COUNT(*) FROM words WHERE word=? AND definition=?`,
+            [word, JSON.stringify(definition)]
+            ) as string
+        )
+    
+    // We know it exists if our count is bigger than 0.
+    return (exists.count > 0);
 }
 
 // Get all words in the database.

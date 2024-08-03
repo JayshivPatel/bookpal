@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { List, Divider, Text} from 'react-native-paper';
-import { DefinitionCard } from '../components/DefinitionCard';
 import { Word } from './Word';
 import { Definition } from '../api/dictionary';
+import { DatabaseDefinitionCard } from '../components/DatabaseDefinitionCard';
 
 export function displayWords(words: Word[]): React.ReactNode {
     const items = [];
@@ -10,7 +10,7 @@ export function displayWords(words: Word[]): React.ReactNode {
     words.forEach((word) => {
         items.push(
         <List.Subheader 
-            key={`pos-${word.definition}`}
+            key={`pos-${word.definition}-word-${word.id}`}
         >
             <Text variant='titleLarge'>{word.word}</Text>
         </List.Subheader>);
@@ -18,10 +18,9 @@ export function displayWords(words: Word[]): React.ReactNode {
         const definition: Definition = JSON.parse(word.definition);
 
         items.push(
-        <DefinitionCard
-            key={`def-${definition.definition}`}
+        <DatabaseDefinitionCard
+            key={`def-${definition.definition}-word-${word.id}`}
             word={word.word}
-            book={"MyFixedBook"}
             definition={definition.definition}
             example={definition.example}
             synonyms={definition.synonyms || []}
@@ -29,7 +28,7 @@ export function displayWords(words: Word[]): React.ReactNode {
         />
         );
 
-        items.push(<Divider key={`divider-${definition.definition}`} />);
+        items.push(<Divider key={`divider-${definition.definition}-word-${word.id}`} />);
         });
 
     return items;

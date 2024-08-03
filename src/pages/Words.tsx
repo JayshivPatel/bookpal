@@ -21,9 +21,7 @@ const Words = () => {
         setWords(displayWords(wordsList))
     };
 
-    React.useEffect(() => {
-        fetchWords();
-    }, []);
+    fetchWords();
 
     return (
         <View style={{ flex: 1 }}>
