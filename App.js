@@ -3,14 +3,14 @@ import { BottomNavigation, PaperProvider, Appbar } from 'react-native-paper';
 import { View } from 'react-native';
 import { useDrizzleStudio } from 'expo-drizzle-studio-plugin';
 
-import { db, createDatabase, addWordToDatabase } from './src/api/database';
+import { db, createDatabase } from './src/api/database';
 import Landing from './src/pages/Landing';
-import Book from './src/pages/Book';
+import Learn from './src/pages/Learn';
 import Words from './src/pages/Words';
 
 
 const LandingScreen = () => <Landing/>
-const BookScreen = () => <Book/>
+const LearnScreen = () => <Learn/>
 const WordsScreen = () => <Words/>
 
 export default function App() {
@@ -20,13 +20,13 @@ export default function App() {
   const [routes] = React.useState([
     { key: 'words', title: 'Words', focusedIcon: 'file-word-box', unfocusedIcon: 'file-word-box-outline' },
     { key: 'home', title: 'Home', focusedIcon: 'home', unfocusedIcon: 'home-outline'},
-    { key: 'book', title: 'Book', focusedIcon: 'book', unfocusedIcon: 'book-outline'},
+    { key: 'learn', title: 'Learn', focusedIcon: 'book', unfocusedIcon: 'book-outline'},
   ]);
 
   const renderScene = BottomNavigation.SceneMap({
     words: WordsScreen,
     home: LandingScreen,
-    book: BookScreen,
+    learn: LearnScreen,
   });
 
   // Database

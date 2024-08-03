@@ -3,7 +3,7 @@ import { ScrollView, View } from 'react-native';
 
 
 
-const Book = () => {
+const Learn = () => {
     return (
         <View style={{flex: 1}}>
             <ScrollView>
@@ -13,4 +13,4 @@ const Book = () => {
 };
 
 
-export default Book;
+export default Learn;

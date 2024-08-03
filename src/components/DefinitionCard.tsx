@@ -22,9 +22,7 @@ export const DefinitionCard = ({word, book, definition, example, synonyms, anton
       } else {
         removeWordFromDatabase(word, databaseDefinition);
       }
-
     }
-
   
     return (
       <View style={{ flex: 1 }}>

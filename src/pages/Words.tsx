@@ -1,51 +1,37 @@
 import * as React from 'react';
-import { ScrollView, View } from 'react-native';
-import { Text, List } from 'react-native-paper';
+import { RefreshControl, ScrollView, View } from 'react-native';
+import { Text } from 'react-native-paper';
 import { getAllWords } from '../api/database';
-import { Word } from '../util/Word'
-import { DefinitionCard } from '../components/DefinitionCard';
-import { Definition } from '../api/dictionary';
+import { displayWords } from '../util/displayWords';
 
 const Words = () => {
-    const [wordList, setWordList] = React.useState<Word[]>([]);
+    const wordsFiller = "Couldn't read words from the database!"
+    const [words, setWords] = React.useState<React.ReactNode>(<Text>{wordsFiller}</Text>)
+    const [refreshing, setRefreshing] = React.useState(false);
+    
+    const onRefresh = React.useCallback(async () => {
+        setRefreshing(true);
+        await fetchWords();
+        setRefreshing(false);
+    }, []);
+
+
+    const fetchWords = async () => {
+        const wordsList = await getAllWords();
+        setWords(displayWords(wordsList))
+    };
 
     React.useEffect(() => {
-        const fetchWords = async () => {
-            try {
-                const words: Word[] = await getAllWords();
-                setWordList(words);
-            } catch (error) {
-                throw new Error(error);
-            }
-        };
-
         fetchWords();
     }, []);
 
     return (
         <View style={{ flex: 1 }}>
-            <ScrollView>
-                {wordList.map((wordRecord: Word) => {
-                    const definition: Definition = JSON.parse(wordRecord.definition);
-
-                    return (
-                        <View>
-                            <List.Subheader>
-                                <Text variant='labelLarge'>{wordRecord.word}</Text>
-                            </List.Subheader>
-                            <DefinitionCard
-                                key={`disp-${wordRecord.id}`}
-                                word={wordRecord.word}
-                                book="MyFixedBook"
-                                definition={definition.definition}
-                                example={definition.example}
-                                synonyms={definition.synonyms || []}
-                                antonyms={definition.antonyms || []}
-                            />
-                        </View>
-                    );
-                })}
-
+            <ScrollView
+                refreshControl={
+                    <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+                    }>
+                {words}
             </ScrollView>
         </View>
     );
