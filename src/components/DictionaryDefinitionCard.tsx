@@ -14,14 +14,8 @@ export const DictionaryDefinitionCard = ({word, book, definition, example, synon
         antonyms: antonyms
     };
 
-    const alreadyInDatabase = () => {
-        const inDatabase: Promise<boolean> = checkWordInDatabase(word, databaseDefinition);
-        inDatabase.then((wordInDatabase) => {setIsToggled(wordInDatabase);})
-    }
-
     const [isToggled, setIsToggled] = React.useState(false);
 
-    alreadyInDatabase();
 
     const handleToggle = () => {
         setIsToggled(!isToggled);

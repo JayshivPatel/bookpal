@@ -1,12 +1,12 @@
 import * as SQLite from 'expo-sqlite';
 import { Definition } from './dictionary';
-import { Count, Word } from '../util/Word';
+import { WordCount, Word } from '../util/Word';
 
 export const db: SQLite.SQLiteDatabase = SQLite.openDatabaseSync("words.db");
 
-async function databaseExecAsync(query: string) {
+async function databaseExecAsync(query: string, params?: string[]) {
     try {
-        await db.execAsync(query);
+        await db.runAsync(query, params);
     } catch (error) {
         throw new Error(error);
     }
@@ -46,6 +46,8 @@ export const createDatabase = () => {
 
 // Add a new word to the database.
 export const addWordToDatabase = (word: string, book: string, definition: Definition) => {
+    const toAdd = JSON.stringify(definition).replace(/'/g, "''");
+    console.log(toAdd);
     databaseExecAsync
     (
         `INSERT INTO words 
@@ -59,7 +61,7 @@ export const addWordToDatabase = (word: string, book: string, definition: Defini
             (
                 '${word}', 
                 '${book}', 
-                '${JSON.stringify(definition)}',
+                '${toAdd}',
                 DATETIME()
             );`
     );
@@ -76,17 +78,15 @@ export const removeWordFromDatabase = (word: string, definition: Definition) => 
 
 // Check if a word is in the database (by definition).
 export const checkWordInDatabase = async (word: string, definition: Definition): Promise<boolean> => {
-    const exists: Count = 
-        JSON.parse(
-            await databaseGetFirstAsync
-            (
-            `SELECT COUNT(*) FROM words WHERE word=? AND definition=?`,
-            [word, JSON.stringify(definition)]
-            ) as string
-        )
-    
+
+    const count = 
+    await databaseGetFirstAsync
+    (
+        `SELECT COUNT(*) FROM words WHERE word=? AND definition=?`,
+        [word, JSON.stringify(definition)]
+    ) as WordCount;
     // We know it exists if our count is bigger than 0.
-    return (exists.count > 0);
+    return (count['COUNT(*)'] > 0);
 }
 
 // Get all words in the database.

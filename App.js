@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { BottomNavigation, PaperProvider, Appbar } from 'react-native-paper';
+import { BottomNavigation, PaperProvider, Appbar, MD3DarkTheme } from 'react-native-paper';
 import { View } from 'react-native';
 import { useDrizzleStudio } from 'expo-drizzle-studio-plugin';
 
@@ -14,6 +14,11 @@ const LearnScreen = () => <Learn/>
 const WordsScreen = () => <Words/>
 
 export default function App() {
+
+  // Database
+  useDrizzleStudio(db);
+  createDatabase();
+
   // Navigator
   const [index, setIndex] = React.useState(0);
 
@@ -29,12 +34,8 @@ export default function App() {
     learn: LearnScreen,
   });
 
-  // Database
-  useDrizzleStudio(db);
-  createDatabase();
-
   return (
-    <PaperProvider>
+    <PaperProvider theme={MD3DarkTheme}>
         <View>
           <Appbar.Header>
             <Appbar.Content title="BookPal" />

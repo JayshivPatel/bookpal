@@ -1,5 +1,3 @@
-import { Definition } from "../api/dictionary"
-
 export type Word = {
     id: number,
     word: string,
@@ -8,6 +6,6 @@ export type Word = {
     timeAdded: Date,
 }
 
-export type Count = {
-    count: number
+export type WordCount = {
+    "COUNT(*)": number
 }

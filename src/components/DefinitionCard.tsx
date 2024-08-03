@@ -9,8 +9,8 @@ export const DefinitionCard = ({definition, example, synonyms, antonyms}) => {
       <View style={{ flex: 1 }}>
         <Text variant="labelLarge">{definition}</Text>
         {example && <Text>{`"${example}"`}</Text>}
-        {synonyms.length > 0 && <SynonymChips label="Synonyms" items={synonyms} />}
-        {antonyms.length > 0 && <SynonymChips label="Antonyms" items={antonyms} />}
+        {synonyms.length > 0 && <SynonymChips label="Synonyms" items={synonyms} synonym={true}/>}
+        {antonyms.length > 0 && <SynonymChips label="Antonyms" items={antonyms} synonym={false}/>}
       </View>
     );
 }

@@ -5,6 +5,7 @@ import { View } from 'react-native';
 
 import { removeWordFromDatabase } from '../api/database';
 import { Definition } from '../api/dictionary';
+import { DefinitionCard } from './DefinitionCard';
 
 export const DatabaseDefinitionCard = ({word, definition, example, synonyms, antonyms}) => {
 
@@ -24,12 +25,12 @@ export const DatabaseDefinitionCard = ({word, definition, example, synonyms, ant
             <Card style={{ marginBottom: 10, flex: 1 }}>
                 <Card.Content>
                     <View style={{ flexDirection:"row", flex: 1 }}>
-                        <View style={{ flex: 1 }}>
-                            <Text variant="labelLarge">{definition}</Text>
-                            {example && <Text>{`"${example}"`}</Text>}
-                            {synonyms.length > 0 && <SynonymChips label="Synonyms" items={synonyms} />}
-                            {antonyms.length > 0 && <SynonymChips label="Antonyms" items={antonyms} />}
-                        </View>
+                        <DefinitionCard 
+                                definition={definition}
+                                example={example}
+                                synonyms={synonyms}
+                                antonyms={antonyms}
+                        />
                         <View>
                             <IconButton
                             icon={'close-circle'}

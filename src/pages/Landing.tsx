@@ -8,7 +8,7 @@ import { ScrollView, View } from 'react-native';
 const Landing = () => {
     const [inputText, setInputText] = React.useState("");
     const outputTextFiller = "Enter a word to look up its meaning!";
-    const [outputItems, setOutputItems] = React.useState<React.ReactNode>(<Text>{outputTextFiller}</Text>);
+    const [outputItems, setOutputItems] = React.useState<React.ReactNode>(<View style={{ flex: 1 }}><Text variant='labelLarge'>{outputTextFiller}</Text></View>);
 
     const inputHandler = async (word: string) => {
         // Fill the input field.
@@ -26,14 +26,16 @@ const Landing = () => {
     }
 
     return (
-        <View style={{flex: 1}}>
+        <View style={{ flex: 1 }}>
+            <View>
                 <TextInput
                     label="Type a word"
                     value={inputText}
                     onChangeText={inputHandler}
                     mode={"outlined"}
                 />
-            <ScrollView>
+            </View>
+            <ScrollView style={{flex: 1}}>
                 {outputItems}
             </ScrollView>
         </View>

@@ -36,10 +36,10 @@ export function displayDictionaryResponse(response: DictionaryResponse[] | Error
         });
 
         if (meaning.synonyms.length > 0) {
-          items.push(<SynonymChips key={`meaning-synonyms-${itemId}`} label="Synonyms" items={meaning.synonyms} />);
+          items.push(<SynonymChips key={`meaning-synonyms-${itemId}`} label="Synonyms" items={meaning.synonyms} synonym={true} />);
         }
         if (meaning.antonyms.length > 0) {
-          items.push(<SynonymChips key={`meaning-antonyms-${itemId}`} label="Antonyms" items={meaning.antonyms} />);
+          items.push(<SynonymChips key={`meaning-antonyms-${itemId}`} label="Antonyms" items={meaning.antonyms} synonym={false}/>);
         }
 
         items.push(<Divider key={`divider-${itemId}`} />);
