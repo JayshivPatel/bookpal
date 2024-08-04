@@ -28,8 +28,12 @@ const Learn = () => {
 
     const fetchWord = async () => {
         const word: Word = await getRandomWord();
-        setWord(word);
-        setDefinition(JSON.parse(word.definition));
+        if (word == null) {
+            setWord(wordFiller);
+            return;
+        }
+            setWord(word);
+            setDefinition(JSON.parse(word.definition));
     };
 
     const getNextWord = () => {
@@ -37,9 +41,8 @@ const Learn = () => {
         setShowDefinition(false);
     };
 
-    React.useEffect(() => {
-        fetchWord();
-    }, []);
+
+    fetchWord();
 
     return (
         <View style={{ flex: 1 }}>

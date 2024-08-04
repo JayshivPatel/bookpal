@@ -1,9 +1,14 @@
 import * as React from "react";
 import { Word } from "./Word";
+import { Text } from "react-native-paper";
 import { Definition } from "../api/dictionary";
 import { DatabaseDefinitionCard } from "../components/DatabaseDefinitionCard";
 
 export function displayWords(words: Word[]): React.ReactNode {
+    if (words.length == 0) {
+        return (<Text>No words in the database!</Text>)
+    }
+
     const items = [];
 
     words.forEach((word) => {
