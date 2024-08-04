@@ -13,8 +13,8 @@ export function displayDictionaryResponse(
 ): React.ReactNode {
     if (isErrorResponse(response)) {
         return (
-            <Card style={{ margin: 16, padding: 16 }}>
-                <Text variant="titleLarge" style={{ marginBottom: 8 }}>
+            <Card style={{ padding: 10 }}>
+                <Text variant="titleMedium" style={{ marginBottom: 8 }}>
                     {response.title}
                 </Text>
                 <Text variant="bodyMedium" style={{ color: "grey" }}>

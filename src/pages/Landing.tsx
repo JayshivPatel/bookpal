@@ -11,11 +11,12 @@ import { ScrollView, View } from "react-native";
 const Landing = () => {
     const [inputText, setInputText] = React.useState("");
     const outputTextFiller = "Enter a word to look up its meaning!";
-    const [outputItems, setOutputItems] = React.useState<React.ReactNode>(
-        <Card style={{ margin: 16, padding: 16, alignItems: "center" }}>
+    const fillerObj = (
+        <Card style={{ padding: 16, alignItems: "center" }}>
             <Text variant="bodyLarge">{outputTextFiller}</Text>
         </Card>
     );
+    const [outputItems, setOutputItems] = React.useState<React.ReactNode>(fillerObj)
 
     const inputHandler = async (word: string) => {
         // Fill the input field.
@@ -23,7 +24,7 @@ const Landing = () => {
 
         // Reset on empty field.
         if (word.length === 0) {
-            setOutputItems(<Text>{outputTextFiller}</Text>);
+            setOutputItems(fillerObj);
             return;
         }
 
@@ -36,12 +37,17 @@ const Landing = () => {
     return (
         <View style={{ flex: 1 }}>
             <View>
-                <TextInput
-                    label="Type a word"
-                    value={inputText}
-                    onChangeText={inputHandler}
-                    mode={"outlined"}
-                />
+                <Card style={{ marginBottom: 10 }}>
+                    <Card.Title title="Lookup" titleVariant="titleMedium" />
+                    <Card.Content>
+                        <TextInput
+                            label="Type a word"
+                            value={inputText}
+                            onChangeText={inputHandler}
+                            mode={"outlined"}
+                        />
+                    </Card.Content>
+                </Card>
             </View>
             <ScrollView style={{ flex: 1 }}>{outputItems}</ScrollView>
         </View>

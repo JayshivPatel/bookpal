@@ -1,6 +1,6 @@
 import * as React from "react";
 import { View } from "react-native";
-import { Button, Card, Text } from "react-native-paper";
+import { Button, Card, Appbar, Text } from "react-native-paper";
 import { getRandomWord } from "../api/database";
 import { Word } from "../util/Word";
 import { Definition } from "../api/dictionary";
@@ -43,9 +43,10 @@ const Learn = () => {
 
     return (
         <View style={{ flex: 1 }}>
-            <Card>
+            <Card style={{ marginBottom: 10 }}>
+                <Card.Title title="Learn" titleVariant="titleMedium" />
                 <Card.Content>
-                    <Text variant="titleLarge" style={{ marginBottom: 8 }}>
+                    <Text variant="bodyLarge" style={{ marginBottom: 8 }}>
                         {word.word}
                     </Text>
                 </Card.Content>
@@ -58,6 +59,7 @@ const Learn = () => {
                     </Button>
                 </Card.Actions>
             </Card>
+
             {showDefinition && (
                 <Card>
                     <Card.Content>
