@@ -1,21 +1,27 @@
-import * as React from 'react';
-import { Card,  IconButton } from 'react-native-paper';
-import { View } from 'react-native';
+import * as React from "react";
+import { Card, IconButton } from "react-native-paper";
+import { View } from "react-native";
 
-import { addWordToDatabase, checkWordInDatabase, removeWordFromDatabase } from '../api/database';
-import { Definition } from '../api/dictionary';
-import { DefinitionCard } from './DefinitionCard';
+import { addWordToDatabase, removeWordFromDatabase } from "../api/database";
+import { Definition } from "../api/dictionary";
+import { DefinitionCard } from "./DefinitionCard";
 
-export const DictionaryDefinitionCard = ({word, book, definition, example, synonyms, antonyms}) => {
+export const DictionaryDefinitionCard = ({
+    word,
+    book,
+    definition,
+    example,
+    synonyms,
+    antonyms,
+}) => {
     const databaseDefinition: Definition = {
         definition: definition,
         example: example,
         synonyms: synonyms,
-        antonyms: antonyms
+        antonyms: antonyms,
     };
 
     const [isToggled, setIsToggled] = React.useState(false);
-
 
     const handleToggle = () => {
         setIsToggled(!isToggled);
@@ -30,8 +36,8 @@ export const DictionaryDefinitionCard = ({word, book, definition, example, synon
         <View style={{ flex: 1 }}>
             <Card style={{ marginBottom: 10, flex: 1 }}>
                 <Card.Content>
-                    <View style={{ flexDirection:"row", flex: 1 }}>
-                        <DefinitionCard 
+                    <View style={{ flexDirection: "row", flex: 1 }}>
+                        <DefinitionCard
                             definition={definition}
                             example={example}
                             synonyms={synonyms}
@@ -39,9 +45,11 @@ export const DictionaryDefinitionCard = ({word, book, definition, example, synon
                         />
                         <View>
                             <IconButton
-                            icon={isToggled ? 'bookmark' : 'bookmark-outline'}
-                            size={20}
-                            onPress={handleToggle}
+                                icon={
+                                    isToggled ? "bookmark" : "bookmark-outline"
+                                }
+                                size={20}
+                                onPress={handleToggle}
                             />
                         </View>
                     </View>
@@ -49,4 +57,4 @@ export const DictionaryDefinitionCard = ({word, book, definition, example, synon
             </Card>
         </View>
     );
-}
+};

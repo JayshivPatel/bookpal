@@ -1,6 +1,6 @@
-import * as SQLite from 'expo-sqlite';
-import { Definition } from './dictionary';
-import { WordCount, Word } from '../util/Word';
+import * as SQLite from "expo-sqlite";
+import { Definition } from "./dictionary";
+import { Word } from "../util/Word";
 
 export const db: SQLite.SQLiteDatabase = SQLite.openDatabaseSync("words.db");
 
@@ -12,7 +12,10 @@ async function databaseExecAsync(query: string, params?: string[]) {
     }
 }
 
-async function databaseGetAllAsync(query: string, params: string[]): Promise<unknown[]> {
+async function databaseGetAllAsync(
+    query: string,
+    params: string[]
+): Promise<unknown[]> {
     try {
         return await db.getAllAsync(query, params);
     } catch (error) {
@@ -20,7 +23,10 @@ async function databaseGetAllAsync(query: string, params: string[]): Promise<unk
     }
 }
 
-async function databaseGetFirstAsync(query: string, params: string[]): Promise<unknown> {
+async function databaseGetFirstAsync(
+    query: string,
+    params: string[]
+): Promise<unknown> {
     try {
         return await db.getFirstAsync(query, params);
     } catch (error) {
@@ -28,11 +34,9 @@ async function databaseGetFirstAsync(query: string, params: string[]): Promise<u
     }
 }
 
-
 // Create database and tables
 export const createDatabase = () => {
-    databaseExecAsync
-    (
+    databaseExecAsync(
         `CREATE TABLE IF NOT EXISTS words
             (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -42,14 +46,16 @@ export const createDatabase = () => {
                 timeAdded DATETIME
             );`
     );
-}
+};
 
 // Add a new word to the database.
-export const addWordToDatabase = (word: string, book: string, definition: Definition) => {
+export const addWordToDatabase = (
+    word: string,
+    book: string,
+    definition: Definition
+) => {
     const toAdd = JSON.stringify(definition).replace(/'/g, "''");
-    console.log(toAdd);
-    databaseExecAsync
-    (
+    databaseExecAsync(
         `INSERT INTO words 
             (
                 word,
@@ -65,31 +71,29 @@ export const addWordToDatabase = (word: string, book: string, definition: Defini
                 DATETIME()
             );`
     );
-}
+};
 
 // Remove a word from the database (by definition).
-export const removeWordFromDatabase = (word: string, definition: Definition) => {
-    databaseExecAsync
-    (
+export const removeWordFromDatabase = (
+    word: string,
+    definition: Definition
+) => {
+    const toRemove = JSON.stringify(definition).replace(/'/g, "''");
+    databaseExecAsync(
         `DELETE FROM words
-            WHERE word='${word}' AND definition='${JSON.stringify(definition)}'`
+            WHERE word='${word}' AND definition='${toRemove}'`
     );
-}
-
-// Check if a word is in the database (by definition).
-export const checkWordInDatabase = async (word: string, definition: Definition): Promise<boolean> => {
-
-    const count = 
-    await databaseGetFirstAsync
-    (
-        `SELECT COUNT(*) FROM words WHERE word=? AND definition=?`,
-        [word, JSON.stringify(definition)]
-    ) as WordCount;
-    // We know it exists if our count is bigger than 0.
-    return (count['COUNT(*)'] > 0);
-}
+};
 
 // Get all words in the database.
 export const getAllWords = async (): Promise<Word[]> => {
     return databaseGetAllAsync(`SELECT * FROM words;`, []) as Promise<Word[]>;
-}
+};
+
+// Get a random word from the database.
+export const getRandomWord = async (): Promise<Word> => {
+    return databaseGetFirstAsync(
+        `SELECT * FROM words ORDER BY RANDOM() LIMIT 1;`,
+        []
+    ) as Promise<Word>;
+};

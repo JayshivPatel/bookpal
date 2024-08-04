@@ -1,41 +1,46 @@
-import * as React from 'react';
-import { Card,  IconButton,  Text } from 'react-native-paper';
-import { SynonymChips } from './SynonymChips'
-import { View } from 'react-native';
+import * as React from "react";
+import { Card, IconButton } from "react-native-paper";
+import { View } from "react-native";
 
-import { removeWordFromDatabase } from '../api/database';
-import { Definition } from '../api/dictionary';
-import { DefinitionCard } from './DefinitionCard';
+import { removeWordFromDatabase } from "../api/database";
+import { Definition } from "../api/dictionary";
+import { DefinitionCard } from "./DefinitionCard";
 
-export const DatabaseDefinitionCard = ({word, definition, example, synonyms, antonyms}) => {
-
+export const DatabaseDefinitionCard = ({
+    word,
+    definition,
+    example,
+    synonyms,
+    antonyms,
+}) => {
     const handleToggle = () => {
         const databaseDefinition: Definition = {
             definition: definition,
             example: example,
             synonyms: synonyms,
-            antonyms: antonyms
-        }
-        
+            antonyms: antonyms,
+        };
+
         removeWordFromDatabase(word, databaseDefinition);
-    }
+    };
 
     return (
         <View style={{ flex: 1 }}>
             <Card style={{ marginBottom: 10, flex: 1 }}>
                 <Card.Content>
-                    <View style={{ flexDirection:"row", flex: 1 }}>
-                        <DefinitionCard 
-                                definition={definition}
-                                example={example}
-                                synonyms={synonyms}
-                                antonyms={antonyms}
+                    <View style={{ flexDirection: "row", flex: 1 }}>
+                        <DefinitionCard
+                            word={word}
+                            definition={definition}
+                            example={example}
+                            synonyms={synonyms}
+                            antonyms={antonyms}
                         />
                         <View>
                             <IconButton
-                            icon={'close-circle'}
-                            size={20}
-                            onPress={handleToggle}
+                                icon={"close-circle"}
+                                size={20}
+                                onPress={handleToggle}
                             />
                         </View>
                     </View>
@@ -43,4 +48,4 @@ export const DatabaseDefinitionCard = ({word, definition, example, synonyms, ant
             </Card>
         </View>
     );
-}
+};
