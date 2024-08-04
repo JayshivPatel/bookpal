@@ -1,6 +1,6 @@
 import * as React from "react";
 import { RefreshControl, ScrollView, View } from "react-native";
-import { Text } from "react-native-paper";
+import { Card, Text } from "react-native-paper";
 import { getAllWords } from "../api/database";
 import { displayWords } from "../util/displayWords";
 
@@ -26,6 +26,9 @@ const Words = () => {
 
     return (
         <View style={{ flex: 1 }}>
+            <Card style={{ marginTop: 10, marginBottom: 10 }}>
+                <Card.Title title="Words" titleVariant="titleMedium" />
+            </Card>
             <ScrollView
                 refreshControl={
                     <RefreshControl

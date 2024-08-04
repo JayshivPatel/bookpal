@@ -3,7 +3,7 @@ import {
     BottomNavigation,
     PaperProvider,
     Appbar,
-    MD3DarkTheme,
+    MD3LightTheme,
 } from "react-native-paper";
 import { View } from "react-native";
 import { useDrizzleStudio } from "expo-drizzle-studio-plugin";
@@ -53,7 +53,7 @@ export default function App() {
     });
 
     return (
-        <PaperProvider theme={MD3DarkTheme}>
+        <PaperProvider theme={MD3LightTheme}>
             <View>
                 <Appbar.Header>
                     <Appbar.Content title="BookPal"/>

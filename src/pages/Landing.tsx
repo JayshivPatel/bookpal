@@ -12,7 +12,7 @@ const Landing = () => {
     const [inputText, setInputText] = React.useState("");
     const outputTextFiller = "Enter a word to look up its meaning!";
     const fillerObj = (
-        <Card style={{ padding: 16, alignItems: "center" }}>
+        <Card style={{ marginBottom: 10, padding: 16, alignItems: "center" }}>
             <Text variant="bodyLarge">{outputTextFiller}</Text>
         </Card>
     );
