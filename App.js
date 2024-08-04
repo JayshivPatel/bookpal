@@ -53,7 +53,7 @@ export default function App() {
     });
 
     return (
-        <PaperProvider theme={MD3LightTheme}>
+        <PaperProvider theme={MD3DarkTheme}>
             <View>
                 <Appbar.Header>
                     <Appbar.Content title="BookPal"/>
