@@ -3,7 +3,7 @@ import {
     BottomNavigation,
     PaperProvider,
     Appbar,
-    MD3LightTheme,
+    MD3DarkTheme,
 } from "react-native-paper";
 import { View } from "react-native";
 import { useDrizzleStudio } from "expo-drizzle-studio-plugin";
