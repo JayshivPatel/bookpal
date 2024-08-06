@@ -6,7 +6,6 @@ import {
     MD3DarkTheme,
 } from "react-native-paper";
 import { View } from "react-native";
-import { useDrizzleStudio } from "expo-drizzle-studio-plugin";
 
 import { db, createDatabase } from "./src/api/database";
 import Landing from "./src/pages/Landing";
@@ -19,7 +18,6 @@ const WordsScreen = () => <Words />;
 
 export default function App() {
     // Database
-    useDrizzleStudio(db);
     createDatabase();
 
     // Navigator
