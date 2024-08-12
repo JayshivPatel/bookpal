@@ -1,21 +1,19 @@
 import * as React from "react";
-import { RefreshControl, ScrollView, View } from "react-native";
-import { Card, Text } from "react-native-paper";
+import { ScrollView, View } from "react-native";
+import { Appbar, Card, Text } from "react-native-paper";
 import { getAllWords } from "../api/database";
 import { displayWords } from "../util/displayWords";
 
 const Words = () => {
-    const wordsFiller = "Couldn't read words from the database!";
-    const [words, setWords] = React.useState<React.ReactNode>(
-        <Text>{wordsFiller}</Text>
+    const fillerObj = (
+        <Card style={{ marginBottom: 10, padding: 16, alignItems: "center" }}>
+            <Text variant="bodyLarge">
+                No saved definitions! Go to Search to save some!
+            </Text>
+        </Card>
     );
-    const [refreshing, setRefreshing] = React.useState(false);
 
-    const onRefresh = React.useCallback(async () => {
-        setRefreshing(true);
-        await fetchWords();
-        setRefreshing(false);
-    }, []);
+    const [words, setWords] = React.useState<React.ReactNode>(fillerObj);
 
     const fetchWords = async () => {
         const wordsList = await getAllWords();
@@ -26,19 +24,12 @@ const Words = () => {
 
     return (
         <View style={{ flex: 1 }}>
-            <Card style={{ marginTop: 10, marginBottom: 10 }}>
-                <Card.Title title="Words" titleVariant="titleMedium" />
-            </Card>
-            <ScrollView
-                refreshControl={
-                    <RefreshControl
-                        refreshing={refreshing}
-                        onRefresh={onRefresh}
-                    />
-                }
-            >
-                {words}
-            </ScrollView>
+            <View>
+                <Appbar.Header>
+                    <Appbar.Content title="Words" />
+                </Appbar.Header>
+            </View>
+            <ScrollView>{words}</ScrollView>
         </View>
     );
 };

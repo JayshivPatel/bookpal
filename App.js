@@ -2,18 +2,14 @@ import * as React from "react";
 import {
     BottomNavigation,
     PaperProvider,
-    Appbar,
-    MD3DarkTheme,
+    MD3LightTheme,
 } from "react-native-paper";
-import { View } from "react-native";
 
-import { db, createDatabase } from "./src/api/database";
-import Landing from "./src/pages/Landing";
-import Learn from "./src/pages/Learn";
+import { createDatabase } from "./src/api/database";
+import Lookup from "./src/pages/Lookup";
 import Words from "./src/pages/Words";
 
-const LandingScreen = () => <Landing />;
-const LearnScreen = () => <Learn />;
+const LookupScreen = () => <Lookup />;
 const WordsScreen = () => <Words />;
 
 export default function App() {
@@ -31,33 +27,20 @@ export default function App() {
             unfocusedIcon: "file-word-box-outline",
         },
         {
-            key: "home",
-            title: "Home",
-            focusedIcon: "home",
-            unfocusedIcon: "home-outline",
-        },
-        {
-            key: "learn",
-            title: "Learn",
-            focusedIcon: "book",
-            unfocusedIcon: "book-outline",
+            key: "search",
+            title: "Search",
+            focusedIcon: "book-search",
+            unfocusedIcon: "book-search-outline",
         },
     ]);
 
     const renderScene = BottomNavigation.SceneMap({
         words: WordsScreen,
-        home: LandingScreen,
-        learn: LearnScreen,
+        search: LookupScreen,
     });
 
     return (
-        <PaperProvider theme={MD3DarkTheme}>
-            <View>
-                <Appbar.Header>
-                    <Appbar.Content title="BookPal"/>
-                </Appbar.Header>
-            </View>
-
+        <PaperProvider theme={MD3LightTheme}>
             <BottomNavigation
                 navigationState={{ index, routes }}
                 onIndexChange={setIndex}

@@ -1,12 +1,24 @@
 import * as React from "react";
 import { Word } from "./Word";
-import { Text } from "react-native-paper";
+import { Card, Text } from "react-native-paper";
 import { Definition } from "../api/dictionary";
 import { DatabaseDefinitionCard } from "../components/DatabaseDefinitionCard";
 
 export function displayWords(words: Word[]): React.ReactNode {
     if (words.length == 0) {
-        return (<Text>No words in the database!</Text>)
+        return (
+            <Card style={{ alignItems: "center" }}>
+                <Card.Content>
+                    <Text variant="bodyLarge">
+                        Couldn't find any words in the database.
+                    </Text>
+
+                    <Text variant="bodySmall">
+                        Try using the Search screen and saving some!
+                    </Text>
+                </Card.Content>
+            </Card>
+        );
     }
 
     const items = [];
