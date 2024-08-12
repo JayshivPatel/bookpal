@@ -2,8 +2,9 @@ import * as React from "react";
 import {
     BottomNavigation,
     PaperProvider,
-    MD3LightTheme,
+    MD3DarkTheme,
 } from "react-native-paper";
+import { StatusBar } from 'expo-status-bar';
 
 import { createDatabase } from "./src/api/database";
 import Lookup from "./src/pages/Lookup";
@@ -40,7 +41,8 @@ export default function App() {
     });
 
     return (
-        <PaperProvider theme={MD3LightTheme}>
+        <PaperProvider theme={MD3DarkTheme}>
+            <StatusBar style="light" />
             <BottomNavigation
                 navigationState={{ index, routes }}
                 onIndexChange={setIndex}
