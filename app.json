@@ -21,6 +21,7 @@
       },
       "package": "com.jayshivpatel.bookpal"
     },
+    "backgroundColor" : "#121212",
     "web": {
       "favicon": "./assets/favicon.png"
     },

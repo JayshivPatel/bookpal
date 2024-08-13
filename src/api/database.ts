@@ -87,7 +87,7 @@ export const removeWordFromDatabase = (
 
 // Get all words in the database.
 export const getAllWords = async (): Promise<Word[]> => {
-    return databaseGetAllAsync(`SELECT * FROM words;`, []) as Promise<Word[]>;
+    return databaseGetAllAsync(`SELECT * FROM words ORDER BY timeAdded DESC;`, []) as Promise<Word[]>;
 };
 
 // Get a random word from the database.
